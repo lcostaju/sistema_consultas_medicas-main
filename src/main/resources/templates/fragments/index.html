@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+    <link href="/css/styles-menu.css" rel="stylesheet">
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <main>
+        <div id="main-content" class="main-container"> 
+            <!-- Conteudo carregado aqui -->
+        </div>
+    </main>
+
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>
+    <!--
+    <script>
+        function loadPage(url, elementId) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => document.getElementById(elementId).innerHTML = data)
+                .catch(error => console.error('Error loading page:', error));
+        }
+
+        function redirecionarAposSubmissao(event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+                const form = event.target;
+                const action = form.getAttribute('action');
+                const formData = new FormData(form);
+
+                fetch(action, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.ok) {
+                        loadPage('/menu', 'main-content'); // Redireciona para a página principal do menu
+                    } else {
+                        alert('Erro ao salvar a consulta.');
+                    }
+                }).catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao salvar a consulta.');
+                });
+        }
+    </script>-->
+</body>
+
+</html>

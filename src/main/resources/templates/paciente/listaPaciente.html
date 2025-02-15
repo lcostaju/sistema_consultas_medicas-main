@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Médicos</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1>Lista de Pacientes</h1>
+
+        <div th:if="${mensagem}" class="mensagem-servidor">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <div class="actions">
+            <!--<a href="#" onclick="loadPage('/paciente/novo', 'main-content')" class="btn">Adicionar novo paciente</a>-->
+            <a href="/paciente/novo" class="btn">Adicionar novo paciente</a>
+            <form th:action="@{/paciente/buscar}" method="get" class="search-form">
+                <input type="text" name="nome" placeholder="Buscar por nome" required/>
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cod.</th>
+                    <th>CPF</th>
+                    <th>RG</th>
+                    <th>Data Nasc.</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Sexo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="paciente : ${pacientes}">
+                    <td th:text="${paciente.cod_paciente}">Cod.</td>
+                    <td th:text="${paciente.cpf}">CPF</td>
+                    <td th:text="${paciente.rg}">RG</td>
+                    <td th:text="${paciente.dt_nascimento}">Data Nasc.</td>
+                    <td th:text="${paciente.nome}">Nome</td>
+                    <td th:text="${paciente.endereco}">Endereço</td>
+                    <td th:text="${paciente.telefone}">Telefone</td>
+                    <td th:text="${paciente.sexo}">Sexo</td>
+                    
+                    <td class='td_btn_editar'>
+                        <!--<a href="#" th:onclick="'loadPage(\'/paciente/editar/' + ${paciente.cod_paciente} + '\', \'main-content\')'" class="btn_editar btn">Editar</a>-->
+                        <a th:href="@{/paciente/editar/{cod_paciente}(cod_paciente=${paciente.cod_paciente})}" class="btn_editar btn">Editar</a>
+
+                        <form th:action="@{/paciente/excluir/{cod_paciente}(cod_paciente=${paciente.cod_paciente})}" method="post" th:onsubmit="return confirm('Tem certeza deseja excluir?');" style="display: inline;">
+                            <button type="submit" class="btn btn_delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>   
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gerenciameto de Consultas</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1>Lista de Consultas Realizadas</h1>
+
+        <div th:if="${mensagem}" class="mensagem-servidor">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <div class="actions">
+            <!--<a href="#" onclick="loadPage('/consulta/novo', 'main-content')" class="btn">Adicionar nova consulta</a>-->
+            <a href="/consulta/novo" class="btn">Adicionar nova consulta</a>
+            <form th:action="@{/consulta/buscar}" method="get" class="search-form">
+                <input type="text" name="nome" placeholder="Buscar por nome:" required/>
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cod.</th>
+                    <th>Data Consulta</th>
+                    <th>Observações</th>
+                    <th>Tipo Consulta</th>
+                    <th>Médico</th>
+                    <th>Paciente</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="consulta : ${consultas}">
+                    <td th:text="${consulta.cod_consulta}">Cod.</td>
+                    <td th:text="${consulta.dt_consulta}">Data Consulta</td>
+                    <td th:text="${consulta.observacoes}">Observações</td>
+                    <td th:text="${consulta.tipo_consulta}">Tipo Consulta</td>
+                    <td th:text="${consulta.medico.nome}">Médico</td>
+                    <td th:text="${consulta.paciente.nome}">Paciente</td>
+                    <td class='td_btn_editar'>
+                        <!--<a href="#" th:onclick="'loadPage(\'/consulta/editar/' + ${consulta.cod_consulta} + '\', \'main-content\')'" class="btn_editar btn">Editar</a>-->
+                        <a th:href="@{/consulta/editar/{cod_consulta}(cod_consulta=${consulta.cod_consulta})}" class="btn_editar btn">Editar</a>
+                        
+                        <form th:action="@{/consulta/excluir/{cod_consulta}(cod_consulta=${consulta.cod_consulta})}" method="post" th:onsubmit="return confirm('Tem certeza deseja excluir?');" style="display: inline;">
+                            <button type="submit" class="btn btn_delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </table>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>       
+</body>
+</html>

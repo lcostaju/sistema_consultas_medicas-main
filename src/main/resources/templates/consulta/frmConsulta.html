@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${consulta.cod_consulta != null ? 'Editar Consulta' : 'Novo Consulta'}">Gerenciamento de Consultas</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1 th:text="${consulta.cod_consulta != null ? 'Editar Consulta' : 'Nova Consulta'}">Cadastro de Consultas</h1>
+
+        <form th:action="@{${consulta.cod_consulta != null ? '/consulta/editar/' + consulta.cod_consulta : '/consulta/novo'}}" th:object="${consulta}" method="post" class="form-form">                          
+            <div>
+                <label for="cod_consulta">Código: </label>
+                <input type="text" th:field="*{cod_consulta}" id="codconsulta" placeholder="Digite o código da consulta" th:if="${consulta.cod_consulta!=null}" readonly/>
+            </div>
+
+            <div>
+                <label for="dt_consulta">Data consulta: </label>
+                <input type="date" th:field="*{dt_consulta}" id="dt_consulta" required/>
+            </div>
+
+            <div>
+                <label for="observacoes">Observações: </label>
+                <input type="text" th:field="*{observacoes}" id="crm" placeholder="Observações da consulta" required/>
+            </div>
+
+            <div>
+                <label for="tipo_consulta">Tipo de Consulta: </label>
+                <input type="text" th:field="*{tipo_consulta}" id="tipo_consulta" placeholder="Convenio ou Particular" required/>
+            </div>
+
+            <!-- <div>
+                <label for="medico">Nome do Médico: </label>
+                <input type="text" th:field="*{medico.nome}" id="medico" placeholder="Nome do Médico" required/>
+                <input type="hidden" th:field="*{medico.cod_medico}" id="cod_medico"/>
+            </div> -->
+
+            <div>
+                <label for="medico">Nome Médico:</label>
+                <select id="medico" name="medico" th:field="*{medico.cod_medico}" required>
+                    <option value="">Selecione um médico</option>
+                    <option th:each="medico : ${medicos}" 
+                            th:value="${medico.cod_medico}"
+                            th:text="${medico.nome}">
+                    </option>
+                </select>
+            </div>
+        
+            <!-- <div>
+                <label for="paciente">Nome do Paciente: </label>
+                <input type="text" th:field="*{paciente.nome}" id="paciente" placeholder="Nome do Paciente" required/>
+                <input type="hidden" th:field="*{paciente.cod_paciente}" id="cod_paciente"/>
+            </div> -->
+
+            <div>
+                <label for="paciente">Nome Paciente:</label>
+                <select id="peciente" name="paciente" th:field="*{paciente.cod_paciente}" required>
+                    <option value="" >Selecione um paciente</option>
+                    <option th:each="paciente : ${pacientes}" 
+                            th:value="${paciente.cod_paciente}" 
+                            th:text="${paciente.nome}">
+                    </option>
+                </select>
+            </div>
+            
+            <button type="submit" class="form-button" th:text="${consulta.cod_consulta != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+        
+        <!--<a onclick="loadPage('/consulta','main-content')" class="a-btn">Voltar</a>-->
+        <a th:href="@{/pedidoexame/novo/{consulta}(consulta=${consulta.cod_consulta})}" th:if="${consulta.cod_consulta} != null" class="a-btn">Adcionar Pedido de exame</a>
+        <a th:href="@{/pagamento/novo/{consulta}(consulta=${consulta.cod_consulta})}" th:if="${consulta.cod_consulta} != null" class="a-btn">Adcionar Pagamento</a>
+        <a th:href="@{/pagamento/listaporconsulta/{consulta}(consulta=${consulta.cod_consulta})}" th:if="${consulta.cod_consulta} != null" class="a-btn">Pagamentos da consulta</a>
+        <a th:href="@{/pedidoexame/listarporconsulta/{consulta}(consulta=${consulta.cod_consulta})}" th:if="${consulta.cod_consulta} != null" class="a-btn">Pedidos de exame da consulta</a>
+        <a href="/consulta" class="a-btn">Voltar</a>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>    
+</body>
+</html>

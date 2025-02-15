@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${pedidoExame.codExame != null ? 'Editar Pedido de exame' : 'Novo Pedido de exame'}">Gerenciamento
+        de pedido de exame</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1 th:text="${pedidoExame.codExame != null ? 'Editar Pedido de exame' : 'Novo Pedido de exame'}">Cadastro de
+            pedido de exame</h1>
+
+        <form
+            th:action="@{${pedidoExame.codExame != null ? '/pedidoexame/atualizar/' + pedidoExame.codExame : '/pedidoexame/salvar'}}"
+            th:object="${pedidoExame}" method="post" class="form-form">
+            <div>
+                <label for="codExame">Código: </label>
+                <input type="text" th:field="*{codExame}" id="codExame" placeholder="Digite o código da consulta"
+                    th:if="${pedidoExame.codExame!=null}" readonly />
+            </div>
+
+            <div>
+                <label for="nomeExame">Nome Exame: </label>
+                <input type="text" th:field="*{nomeExame}" id="nomeExame" required />
+            </div>
+
+            <div>
+                <label for="dataSolicitacao">Data Solicitação: </label>
+                <input type="date" th:field="*{dataSolicitacao}" id="dataSolicitacao" required />
+            </div>
+
+            <div>
+                <label for="dataResultado">Data Resultado: </label>
+                <input type="date" th:field="*{dataResultado}" id="dataResultado" required />
+            </div>
+
+            <div>
+                <label for="consulta">Consulta:</label>
+                <input type="text" id="consulta" th:field="*{consulta.cod_consulta}" readonly />
+            </div>
+
+            <div>
+                <label for="resultado">Resultado: </label>
+                <input type="text" th:field="*{resultado}" id="resultado" required />
+            </div>
+
+            <button type="submit" class="form-button"
+            th:text="${pedidoExame.codExame != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+
+        <a th:href="@{/consulta}" class="a-btn">Voltar às Consultas</a>
+        <a th:href="@{/pedidoexame}" class="a-btn">Lista de pedidos de exame</a>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>
+</body>
+
+</html>

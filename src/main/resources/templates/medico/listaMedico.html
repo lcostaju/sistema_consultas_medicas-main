@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Médicos</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1>Lista de Médicos</h1>
+
+        <div th:if="${mensagem}" class="mensagem-servidor">
+            <p th:text="${mensagem}"></p>
+        </div>
+
+        <div class="actions">
+            <a href="/medico/novo" class="btn">Adicionar novo médico</a>
+
+            <form th:action="@{/medico/buscar}" method="get" class="search-form">
+                <input type="text" name="nome" placeholder="Buscar por nome" required/>
+                <button type="submit" class="btn">Buscar</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cod.</th>
+                    <th>CRM</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Especialidade</th>
+                    <th>Sexo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="medico : ${medicos}">
+                    <td th:text="${medico.cod_medico}">Cod.</td>
+                    <td th:text="${medico.crm}">CRM</td>
+                    <td th:text="${medico.nome}">Nome</td>
+                    <td th:text="${medico.endereco}">Endereço</td>
+                    <td th:text="${medico.telefone}">Telefone</td>
+                    <td th:text="${medico.email}">E-mail</td>
+                    <td th:text="${medico.especialidade}">Especialidade</td>
+                    <td th:text="${medico.sexo}">Sexo</td>
+                    <td class='td_btn_editar'>
+                        <a th:href="@{/medico/editar/{cod_medico}(cod_medico=${medico.cod_medico})}" class="btn_editar btn">Editar</a>
+
+                        <form th:action="@{/medico/excluir/{cod_medico}(cod_medico=${medico.cod_medico})}" method="post" th:onsubmit="return confirm('Tem certeza deseja excluir?');" style="display: inline;">
+                            <button type="submit" class="btn btn_delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>   
+</body>
+</html>

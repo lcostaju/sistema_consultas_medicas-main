@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${pagamento.codPagamento != null ? 'Editar pagamento' : 'Novo pagamento'}">Gerenciamento
+        de pagamento</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1 th:text="${pagamento.codPagamento != null ? 'Editar pagamento' : 'Novo pagamento'}">Cadastro de
+            pagamento</h1>
+
+        <form
+            th:action="@{${pagamento.codPagamento != null ? '/pagamento/atualizar' : '/pagamento/salvar'}}"
+            th:object="${pagamento}" method="post" class="form-form">
+            <div>
+                <label for="codPagamento">Código: </label>
+                <input type="text" th:field="*{codPagamento}" id="codPagamento" th:if="${pagamento.codPagamento!=null}"
+                    readonly />
+            </div>
+
+            <div>
+                <label for="tipoPagamento">Tipo de Pagamento:</label>
+                <select name="tipoPagamento" id="tipoPagamento" th:field="*{tipoPagamento}" required>
+                    <option value="">Selecione um tipo de pagamento</option>
+                    <option value="Dinheiro" th:selected="*{tipoPagamento} == 'Dinheiro'">Dinheiro</option>
+                    <option value="Cartao" th:selected="*{tipoPagamento} == 'Cartao'">Cartão</option>
+                    <option value="PIX" th:selected="*{tipoPagamento} == 'PIX'">PIX</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="vlrPagamento">Valor</label>
+            <input type="number" step="0.01" min="0" id="vlrPagamento" th:field="*{vlrPagamento}" required/>
+            </div>
+
+            <div>
+                <label for="dataPagamento">Data do pagamento:</label>
+            <input type="date" id="dataPagamento" th:field="*{dataPagamento}" required/>
+            </div>
+
+            <div>
+                <label for="consulta">Consulta:</label>
+                <input type="text" id="consulta" th:field="*{consulta.cod_consulta}" readonly />
+            </div>
+
+
+            <button type="submit" class="form-button"
+                th:text="${pagamento.codPagamento != null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+
+        <a th:href="@{/consulta}" class="a-btn">Voltar às Consultas</a>
+        <a th:href="@{/pagamento}" class="a-btn">Lista de pagamentos</a>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>
+</body>
+
+</html>

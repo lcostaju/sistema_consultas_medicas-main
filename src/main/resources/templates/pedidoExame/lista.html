@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}"></header>
+    <div class="container">
+        <h1>Lista de Pedidos de exame</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Codigo do Exame</th>
+                <th>Nome do Exame</th>
+                <th>Data da Solicitacao</th>
+                <th>Data da Resultado</th>
+                <th>Consulta</th>
+                <th>Resultado</th>
+                <th>Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pedidoExame : ${pedidosExame}">
+                <td th:text="${pedidoExame.codExame}"></td>
+                <td th:text="${pedidoExame.nomeExame}"></td>
+                <td th:text="${pedidoExame.dataSolicitacao}"></td>
+                <td th:text="${pedidoExame.dataResultado}"></td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pedidoExame.consulta.cod_consulta})}" class="btn btn-edit" th:text="${pedidoExame.consulta.cod_consulta}"></a>
+                </td>
+                <!-- <td th:text="${pedidoExame.consulta.codConsulta}"></td> -->
+                <td th:text="${pedidoExame.resultado}"></td>
+                <td>
+                    <a th:href="@{/pedidoexame/editar/{codExame}(codExame=${pedidoExame.codExame})}" class="btn_editar btn">Editar</a>
+                    <form th:action="@{/pedidoexame/delete/{codPedidoExame}(codPedidoExame=${pedidoExame.codExame})}"
+                        method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');"
+                        style="display:inline;">
+                        <button type="submit" class="btn btn_delete">Excluir</button>
+                    </form>    
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- <a th:href="@{/consulta}" class="btn">Voltar às Consultas</a>
+        <a th:href="@{/index.html}" class="btn btn-home">Voltar para home</a> -->
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer> 
+</body>
+
+</html>

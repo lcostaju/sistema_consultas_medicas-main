@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${paciente.cod_paciente != null ? 'Editar Cadastro do Paciente' : 'Novo Cadastro de Paciente'}">Gerenciamento de Pacientes</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+</head>
+<body>
+    <header th:insert="~{fragments/header :: header}">
+    </header>
+
+    <div class="container">
+        <h1 th:text="${paciente.cod_paciente != null ? 'Editar Cadastro de Paciente' : 'Novo Cadastro de Paciente'}">Formulario de Cadastro de Pacientes</h1>
+
+        <form th:action="@{${paciente.cod_paciente != null ? '/paciente/editar/' + paciente.cod_paciente : '/paciente/novo'}}" th:object="${paciente}" method="post" class="form-form">
+            <div>
+                <label for="cod_paciente">Código: </label>
+                <input type="text" th:field="*{cod_paciente}" id="cod_paciente" placeholder="Digite o código" th:if="${paciente.cod_paciente != null}" readonly/>
+            </div>
+            
+            <div>
+                <label for="cpf">Nº do CPF: </label>
+                <input type="text" th:field="*{cpf}" id="cpf" placeholder="Numero do CPF" required/>
+            </div>
+
+            <div>
+                <label for="rg">Nº do RG: </label>
+                <input type="text" th:field="*{rg}" id="rg" placeholder="Numero do RG" required/>
+            </div>
+
+            <div>
+                <label for="dt_nascimento">Data nascimento: </label>
+                <input type="date" th:field="*{dt_nascimento}" id="dt_nascimento" required/>
+            </div>
+
+            <div>
+                <label for="nome">Nome: </label>
+                <input type="text" th:field="*{nome}" id="nome" placeholder="Digite o Nome" required/>
+            </div>
+
+            <div>
+                <label for="endereco">Endereço: </label>
+                <input type="text" th:field="*{endereco}" id="endereco" placeholder="Digite o endereço completo" required/>
+            </div>
+
+            <div>
+                <label for="telefone">Telefone: </label>
+                <input type="text" th:field="*{telefone}" id="telefone" placeholder="(34)98844-5566" required/>
+            </div>
+
+            <!-- <div>
+                <label for="sexo">Sexo: </label>
+                <input type="text" th:field="*{sexo}" id="sexo" placeholder="Masculino ou Feminino"/>
+            </div> -->
+            <div>
+                <label for="sexo">Sexo:</label>
+                <select name="" id="sexo" th:field="*{sexo}" required>
+                    <option value="">Selecione o sexo</option>
+                    <option value="M" th:selected="*{sexo} == 'M'">Masculino</option>
+                    <option value="F" th:selected="*{sexo} == 'F'">Feminino</option>
+                </select>
+            </div>
+
+            <button type="submit" class="form-button" th:text="${paciente.cod_paciente!= null ? 'Atualizar' : 'Salvar'}">Salvar</button>
+        </form>
+
+        <a onclick="loadPage('/paciente', 'main-content')" class="a-btn">Voltar</a>
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer>   
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link href="/css/styles-login.css" rel="stylesheet">
+</head>
+<body>
+    <div class="cadastro-container">
+        <div class="login-form">
+            <h1>Cadastro</h1>
+            <br/>
+            <form action="/login/cadastro" method="post">
+                <div class="input-group">
+                    <label for="crm">CRM:</label>
+                    <input type="crm" id="cr" name="crm" required>
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirmar Senha:</label>
+                    <input type="password" id="confirmaSenha" name="confirmaSenha" required>
+                </div>
+                <button type="submit">Cadastrar</button>
+
+                <div class="login-options">
+                    Já tem cadastro.</br><a href="/" class="signup-link">Login.</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

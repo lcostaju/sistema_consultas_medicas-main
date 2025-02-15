@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    <link th:href="@{/css/styles-menu.css}" rel="stylesheet">
+    <title>Lista de Pagamentos</title>
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}"></header>
+    <div class="container">
+        <h1>Lista de Pagamentos</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Codigo do pagamento</th>
+                <th>Tipo do pagamento</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Consulta</th>
+                <th>Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pagamento : ${pagamentos}">
+                <td th:text="${pagamento.codPagamento}"></td>
+                <td th:text="${pagamento.tipoPagamento}"></td>
+                <td th:text="${pagamento.vlrPagamento}"></td>
+                <td th:text="${pagamento.dataPagamento}"></td>
+                <td><a th:href="@{/consulta/editar/{codConsulta}(codConsulta=${pagamento.consulta.cod_consulta})}" class="btn btn-edit" th:text="${pagamento.consulta.cod_consulta}"></a>
+                </td>
+                <!-- <td th:text="${pagamento.consulta.codConsulta}"></td> -->
+                <!-- <td th:text="${pagamento.resultado}"></td> -->
+                <td>
+                    <a th:href="@{/pagamento/editar/{codPagamento}(codPagamento=${pagamento.codPagamento})}" class="btn_editar btn">Editar</a>
+                    <form th:action="@{/pagamento/delete/{codpagamento}(codpagamento=${pagamento.codPagamento})}"
+                        method="post" th:onsubmit="return confirm('Tem certeza que deseja excluir?');"
+                        style="display:inline;">
+                        <button type="submit" class="btn btn_delete">Excluir</button>
+                    </form>    
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- <a th:href="@{/consulta}" class="btn">Voltar às Consultas</a>
+        <a th:href="@{/index.html}" class="btn btn-home">Voltar para home</a> -->
+    </div>
+    <footer th:insert="~{fragments/footer :: footer}">
+    </footer> 
+</body>
+
+</html>
